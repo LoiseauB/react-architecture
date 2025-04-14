@@ -17,6 +17,6 @@ export class PlayersForm {
   }
 
   removePlayer(state: CreatingGameModel.Player[], id: string) {
-    return [];
+    return state.filter((player) => player.id !== id);
   }
 }
