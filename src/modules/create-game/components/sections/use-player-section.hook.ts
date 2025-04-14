@@ -5,12 +5,13 @@ import { app } from "../../../app/app";
 
 export const usePlayerSection = () => {
   function addPlayer() {
-    const newState = playersForm.current.addPlayer(players);
-    setPlayers(newState);
+    const newState = playersForm.current.addPlayer(form);
+    setsetForm(newState);
   }
 
   function removePlayer(id: string) {
-    setPlayers((players) => players.filter((player) => player.id !== id));
+    const newState = playersForm.current.removePlayer(form, id);
+    setsetForm(newState);
   }
 
   function updatePlayer(id: string, key: string, value: string | number) {}
@@ -23,10 +24,12 @@ export const usePlayerSection = () => {
     return false;
   }
 
-  const [players, setPlayers] = useState<CreatingGameModel.Player[]>([]);
+  const [form, setsetForm] = useState<CreatingGameModel.Form>({
+    players: [],
+    teamLeaderId: null,
+  });
 
   const playersForm = useRef(new PlayersForm(app.dependencies.idGenerator));
-  console.log(players);
 
   return {
     addPlayer,
@@ -35,6 +38,6 @@ export const usePlayerSection = () => {
     changeTeamLeader,
     onNext,
     isSubmittable: isSubmittable(),
-    players,
+    form,
   };
 };

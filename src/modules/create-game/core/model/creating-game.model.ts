@@ -6,4 +6,9 @@ export namespace CreatingGameModel {
     lastName: string;
     age: number;
   };
+
+  export type Form = {
+    players: Player[];
+    teamLeaderId: string | null;
+  };
 }

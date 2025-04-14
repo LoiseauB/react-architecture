@@ -1,11 +1,13 @@
 import {
   Box,
-  Typography,
-  Grid,
   Button,
+  Checkbox,
   FormControl,
+  FormControlLabel,
   FormLabel,
+  Grid,
   TextField,
+  Typography,
 } from "@mui/material";
 import { usePlayerSection } from "./use-player-section.hook";
 
@@ -19,11 +21,13 @@ export const PlayersSection: React.FC<object> = () => {
       <Typography variant="h5">Joueurs</Typography>
       <Grid sx={{ paddingTop: 2 }} rowSpacing={4}>
         <Box>
-          {presenter.players.map((player) => (
+          {presenter.form.players.map((player) => (
             <PlayerRow
               key={player.id}
               onChange={presenter.updatePlayer}
               onDelete={presenter.removePlayer}
+              isTeamLeader={player.id === presenter.form.teamLeaderId}
+              changeTeamLeader={presenter.changeTeamLeader}
               {...player}
             />
           ))}
@@ -60,9 +64,20 @@ export const PlayerRow: React.FC<{
   firstName: string;
   lastName: string;
   age: number;
+  isTeamLeader: boolean;
   onChange: (id: string, key: string, value: string) => void;
   onDelete: (id: string) => void;
-}> = ({ id, firstName, lastName, age, onChange, onDelete }) => {
+  changeTeamLeader: (id: string) => void;
+}> = ({
+  id,
+  firstName,
+  lastName,
+  age,
+  isTeamLeader,
+  onChange,
+  onDelete,
+  changeTeamLeader,
+}) => {
   return (
     <Box>
       <Grid container direction="row" alignItems="center" spacing={2}>
@@ -93,7 +108,19 @@ export const PlayerRow: React.FC<{
             />
           </FormControl>
         </Grid>
-        <Box sx={{ marginTop: 2 }}>
+        <Grid item>
+          <FormControlLabel
+            sx={{ marginTop: 3 }}
+            control={
+              <Checkbox
+                checked={isTeamLeader}
+                onChange={() => changeTeamLeader(id)}
+              />
+            }
+            label="Leader"
+          />
+        </Grid>
+        <Box sx={{ marginTop: 5 }}>
           <Button
             variant="contained"
             onClick={() => onDelete(id)}
