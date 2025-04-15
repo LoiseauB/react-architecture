@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1744708300331" clover="3.2.0">
-  <project timestamp="1744708300331" name="All files">
-    <metrics statements="69" coveredstatements="68" conditionals="22" coveredconditionals="21" methods="6" coveredmethods="6" elements="97" coveredelements="95" complexity="0" loc="69" ncloc="69" packages="1" files="1" classes="1"/>
+<coverage generated="1744708540630" clover="3.2.0">
+  <project timestamp="1744708540630" name="All files">
+    <metrics statements="69" coveredstatements="68" conditionals="21" coveredconditionals="20" methods="6" coveredmethods="6" elements="96" coveredelements="94" complexity="0" loc="69" ncloc="69" packages="1" files="1" classes="1"/>
     <file name="players-form.ts" path="/Users/baptisteloiseau/Developer/3WA/dev3/squadforge/src/modules/create-game/core/form/players-form.ts">
-      <metrics statements="69" coveredstatements="68" conditionals="22" coveredconditionals="21" methods="6" coveredmethods="6"/>
+      <metrics statements="69" coveredstatements="68" conditionals="21" coveredconditionals="20" methods="6" coveredmethods="6"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
@@ -58,7 +58,7 @@
       <line num="52" count="4" type="stmt"/>
       <line num="53" count="4" type="stmt"/>
       <line num="54" count="4" type="stmt"/>
-      <line num="55" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="55" count="4" type="cond" truecount="1" falsecount="0"/>
       <line num="56" count="3" type="cond" truecount="1" falsecount="0"/>
       <line num="57" count="3" type="cond" truecount="1" falsecount="0"/>
       <line num="58" count="3" type="stmt"/>

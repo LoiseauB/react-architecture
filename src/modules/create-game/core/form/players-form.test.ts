@@ -116,8 +116,8 @@ describe("Players Form", () => {
   });
 
   describe("Scenario:  Update a player", () => {
-    it("should not update if there is no data given", () => {
-      const state = form.updatePlayer(stateWithOnePlayer, "1", "", "");
+    it("should not update if there is no value given", () => {
+      const state = form.updatePlayer(stateWithOnePlayer, "1", "firstName", "");
       expect(state).toEqual(stateWithOnePlayer);
     });
 
