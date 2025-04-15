@@ -1,43 +1,45 @@
+import { produce } from "immer";
 import { IIDGenerator } from "../../../shared/id-generator";
 import { GameModel } from "../model/game.model";
+import { PlayerFactory } from "../model/player-factory";
 
 export class PlayersForm {
   constructor(private idGenerator: IIDGenerator) {}
 
   addPlayer(state: GameModel.Form): GameModel.Form {
-    return {
-      ...state,
-      players: [
-        ...state.players,
-        {
-          id: this.idGenerator.generate(),
-          firstName: "John",
-          lastName: "Doe",
-          age: 30,
-        },
-      ],
-    };
+    return produce(state, (draft) => {
+      draft.players.push(
+        PlayerFactory.create({ id: this.idGenerator.generate() })
+      );
+    });
   }
 
   removePlayer(state: GameModel.Form, id: string): GameModel.Form {
-    return {
-      ...state,
-      players: state.players.filter((player) => player.id !== id),
-      teamLeaderId: state.teamLeaderId === id ? null : state.teamLeaderId,
-    };
+    return produce(state, (draft) => {
+      const index = draft.players.findIndex((player) => player.id === id);
+      if (index < 0) return;
+      draft.players.splice(index, 1);
+
+      if (draft.teamLeaderId === id) {
+        draft.teamLeaderId = null;
+      }
+    });
   }
 
   changeTeamLeader(state: GameModel.Form, id: string): GameModel.Form {
-    return {
-      ...state,
-      teamLeaderId: state.players.some((player) => player.id === id)
-        ? id
-        : null,
-    };
+    return produce(state, (draft) => {
+      const hasTeamLeader = draft.players.some((player) => player.id === id);
+      draft.teamLeaderId = hasTeamLeader ? id : null;
+    });
   }
 
   isSubmittable(state: GameModel.Form): boolean {
-    return state.players.length > 0 && state.teamLeaderId ? true : false;
+    return (
+      state.teamLeaderId !== null &&
+      state.players.every((player) => player.age > 0) &&
+      state.players.every((player) => player.firstName.length > 0) &&
+      state.players.every((player) => player.lastName.length > 0)
+    );
   }
 
   updatePlayer<T extends keyof GameModel.Player>(
@@ -47,18 +49,10 @@ export class PlayersForm {
     value: GameModel.Player[T]
   ): GameModel.Form {
     if (!id || !key || !value) return state;
-
-    return {
-      ...state,
-      players: state.players.map((player) => {
-        if (player.id === id) {
-          return {
-            ...player,
-            [key]: value,
-          };
-        }
-        return player;
-      }),
-    };
+    return produce(state, (draft) => {
+      const player = draft.players.find((player) => player.id === id);
+      if (!player) return;
+      player[key] = value;
+    });
   }
 }

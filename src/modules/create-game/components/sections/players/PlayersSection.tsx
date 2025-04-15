@@ -12,14 +12,14 @@ import {
 import { usePlayerSection } from "./use-player-section.hook";
 
 import DeleteIcon from "@mui/icons-material/Delete";
-import { GameModel } from "../../core/model/game.model";
+import { GameModel } from "../../../core/model/game.model";
 
 export const PlayersSection: React.FC<object> = () => {
   const presenter = usePlayerSection();
 
   return (
     <Box sx={{ marginTop: 2 }}>
-      <Typography variant="h5">Joueurs</Typography>
+      <Typography variant="h5">Players 👤</Typography>
       <Grid sx={{ paddingTop: 2 }} rowSpacing={4}>
         <Box>
           {presenter.form.players.map((player) => (

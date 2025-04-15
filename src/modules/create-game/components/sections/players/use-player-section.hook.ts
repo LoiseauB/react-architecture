@@ -1,7 +1,9 @@
 import { useRef, useState } from "react";
-import { app } from "../../../app/app";
-import { PlayersForm } from "../../core/form/players-form";
-import { GameModel } from "../../core/model/game.model";
+import { app } from "../../../../app/app";
+import { useAppDispatch } from "../../../../store/store";
+import { choosePlayers } from "../../../core/actions/choose-player.action";
+import { PlayersForm } from "../../../core/form/players-form";
+import { GameModel } from "../../../core/model/game.model";
 
 export const usePlayerSection = () => {
   function addPlayer() {
@@ -28,13 +30,14 @@ export const usePlayerSection = () => {
   }
 
   function onNext() {
-    console.log(form);
+    dispatch(choosePlayers(form));
   }
 
   function isSubmittable() {
     return playersForm.current.isSubmittable(form);
   }
 
+  const dispatch = useAppDispatch();
   const [form, setForm] = useState<GameModel.Form>({
     players: [],
     teamLeaderId: null,

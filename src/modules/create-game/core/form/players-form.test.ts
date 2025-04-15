@@ -1,5 +1,6 @@
 import { IIDGenerator } from "../../../shared/id-generator";
 import { GameModel } from "../model/game.model";
+import { PlayerFactory } from "../model/player-factory";
 import { PlayersForm } from "./players-form";
 
 class FixedIDGenerator implements IIDGenerator {
@@ -9,16 +10,23 @@ class FixedIDGenerator implements IIDGenerator {
 }
 const idGenerator = new FixedIDGenerator();
 const form = new PlayersForm(idGenerator);
+const johnDoe = PlayerFactory.create({
+  id: "1",
+  firstName: "John",
+  lastName: "Doe",
+});
+const janeDoe = PlayerFactory.create({
+  id: "2",
+  firstName: "Jane",
+  lastName: "Doe",
+});
 const emptyState: GameModel.Form = { players: [], teamLeaderId: null };
 const stateWithOnePlayer: GameModel.Form = {
-  players: [{ id: "1", firstName: "John", lastName: "Doe", age: 30 }],
+  players: [johnDoe],
   teamLeaderId: null,
 };
 const stateWithTwoPlayers: GameModel.Form = {
-  players: [
-    { id: "1", firstName: "John", lastName: "Doe", age: 30 },
-    { id: "2", firstName: "John", lastName: "Doe", age: 30 },
-  ],
+  players: [johnDoe, janeDoe],
   teamLeaderId: null,
 };
 
@@ -28,7 +36,7 @@ describe("Players Form", () => {
       const state = form.addPlayer(emptyState);
 
       expect(state.players).toEqual([
-        { id: "1", firstName: "John", lastName: "Doe", age: 30 },
+        { id: "1", firstName: "", lastName: "", age: 0 },
       ]);
     });
 
@@ -36,8 +44,8 @@ describe("Players Form", () => {
       const state = form.addPlayer(stateWithOnePlayer);
 
       expect(state.players).toEqual([
-        { id: "1", firstName: "John", lastName: "Doe", age: 30 },
-        { id: "1", firstName: "John", lastName: "Doe", age: 30 },
+        { id: "1", firstName: "John", lastName: "Doe", age: 0 },
+        { id: "1", firstName: "", lastName: "", age: 0 },
       ]);
     });
 
@@ -45,9 +53,9 @@ describe("Players Form", () => {
       const state = form.addPlayer(stateWithTwoPlayers);
 
       expect(state.players).toEqual([
-        { id: "1", firstName: "John", lastName: "Doe", age: 30 },
-        { id: "2", firstName: "John", lastName: "Doe", age: 30 },
-        { id: "1", firstName: "John", lastName: "Doe", age: 30 },
+        { id: "1", firstName: "John", lastName: "Doe", age: 0 },
+        { id: "2", firstName: "Jane", lastName: "Doe", age: 0 },
+        { id: "1", firstName: "", lastName: "", age: 0 },
       ]);
     });
   });
@@ -66,7 +74,7 @@ describe("Players Form", () => {
     it("should remove the player with the given ID when there is two", () => {
       const state = form.removePlayer(stateWithTwoPlayers, "1");
       expect(state.players).toEqual([
-        { id: "2", firstName: "John", lastName: "Doe", age: 30 },
+        { id: "2", firstName: "Jane", lastName: "Doe", age: 0 },
       ]);
     });
 
@@ -108,10 +116,17 @@ describe("Players Form", () => {
 
     it("should submit if there is players and a team leader", () => {
       const state = form.isSubmittable({
-        ...stateWithTwoPlayers,
-        teamLeaderId: "2",
+        teamLeaderId: "1",
+        players: [{...johnDoe, age: 30}],
       });
       expect(state).toBeTruthy();
+    });
+
+    it("should be not submittable if age lower or equal than zero", () => {
+      const stateWithTeamLeader = { ...stateWithOnePlayer, teamLeaderId: "1" };
+      const isSubmittable = form.isSubmittable(stateWithTeamLeader);
+
+      expect(isSubmittable).toBeFalsy();
     });
   });
 
