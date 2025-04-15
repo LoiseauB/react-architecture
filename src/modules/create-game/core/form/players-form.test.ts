@@ -69,6 +69,13 @@ describe("Players Form", () => {
         { id: "2", firstName: "John", lastName: "Doe", age: 30 },
       ]);
     });
+
+    it("should set team leader id to null if I remove the team leader", () => {
+      const stateWithTeamLeader = { ...stateWithTwoPlayers, teamLeaderId: "1" };
+      const state = form.removePlayer(stateWithTeamLeader, "1");
+
+      expect(state.teamLeaderId).toBeNull();
+    });
   });
 
   describe("Scenario: Define a team leader", () => {
@@ -81,10 +88,82 @@ describe("Players Form", () => {
       const state = form.changeTeamLeader(stateWithOnePlayer, "1");
       expect(state.teamLeaderId).toEqual("1");
     });
-    
+
     it("set team leader ID with more one  user", () => {
       const state = form.changeTeamLeader(stateWithTwoPlayers, "2");
       expect(state.teamLeaderId).toEqual("2");
+    });
+  });
+
+  describe("Scenario:  isSubmittable", () => {
+    it("should not submit if there is no player", () => {
+      const state = form.isSubmittable(emptyState);
+      expect(state).toBeFalsy();
+    });
+
+    it("should not submit if there is players but no team leader", () => {
+      const state = form.isSubmittable(stateWithTwoPlayers);
+      expect(state).toBeFalsy();
+    });
+
+    it("should submit if there is players and a team leader", () => {
+      const state = form.isSubmittable({
+        ...stateWithTwoPlayers,
+        teamLeaderId: "2",
+      });
+      expect(state).toBeTruthy();
+    });
+  });
+
+  describe("Scenario:  Update a player", () => {
+    it("should not update if there is no data given", () => {
+      const state = form.updatePlayer(stateWithOnePlayer, "1", "", "");
+      expect(state).toEqual(stateWithOnePlayer);
+    });
+
+    it("should update the first name", () => {
+      const state = form.updatePlayer(
+        stateWithOnePlayer,
+        "1",
+        "firstName",
+        "Bill"
+      );
+      expect(state.players[0]).toEqual({
+        id: "1",
+        firstName: "Bill",
+        lastName: "Doe",
+        age: 30,
+      });
+    });
+
+    it("should update the last name", () => {
+      const state = form.updatePlayer(
+        stateWithOnePlayer,
+        "1",
+        "lastName",
+        "Bill"
+      );
+      expect(state.players[0]).toEqual({
+        id: "1",
+        firstName: "John",
+        lastName: "Bill",
+        age: 30,
+      });
+    });
+   
+    it("should update the age", () => {
+      const state = form.updatePlayer(
+        stateWithOnePlayer,
+        "1",
+        "age",
+        "23"
+      );
+      expect(state.players[0]).toEqual({
+        id: "1",
+        firstName: "John",
+        lastName: "Doe",
+        age: 23,
+      });
     });
   });
 });

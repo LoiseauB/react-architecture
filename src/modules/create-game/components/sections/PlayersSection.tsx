@@ -49,7 +49,7 @@ export const PlayersSection: React.FC<object> = () => {
           <Button
             variant="contained"
             onClick={presenter.onNext}
-            disabled={true}
+            disabled={!presenter.isSubmittable}
           >
             Suivant
           </Button>

@@ -24,7 +24,7 @@ export const usePlayerSection = () => {
   function onNext() {}
 
   function isSubmittable() {
-    return false;
+    return playersForm.current.isSubmittable(form);
   }
 
   const [form, setForm] = useState<CreatingGameModel.Form>({
