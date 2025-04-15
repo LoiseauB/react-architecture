@@ -1,5 +1,5 @@
 import { IIDGenerator } from "../../../shared/id-generator";
-import { GameModel } from "../model/creating-game.model";
+import { GameModel } from "../model/game.model";
 
 export class PlayersForm {
   constructor(private idGenerator: IIDGenerator) {}
@@ -48,14 +48,17 @@ export class PlayersForm {
   ): GameModel.Form {
     if (!id || !key || !value) return state;
 
-    return { ...state, players: state.players.map((player) => {
-      if (player.id === id) {
-        return {
-          ...player,
-          [key]: value,
-        };
-      }
-      return player;
-    }) };
+    return {
+      ...state,
+      players: state.players.map((player) => {
+        if (player.id === id) {
+          return {
+            ...player,
+            [key]: value,
+          };
+        }
+        return player;
+      }),
+    };
   }
 }

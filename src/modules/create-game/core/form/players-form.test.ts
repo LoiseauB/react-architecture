@@ -1,5 +1,5 @@
 import { IIDGenerator } from "../../../shared/id-generator";
-import { GameModel } from "../model/creating-game.model";
+import { GameModel } from "../model/game.model";
 import { PlayersForm } from "./players-form";
 
 class FixedIDGenerator implements IIDGenerator {

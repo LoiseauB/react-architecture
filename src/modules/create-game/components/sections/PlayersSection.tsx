@@ -12,7 +12,7 @@ import {
 import { usePlayerSection } from "./use-player-section.hook";
 
 import DeleteIcon from "@mui/icons-material/Delete";
-import { GameModel } from "../../core/model/creating-game.model";
+import { GameModel } from "../../core/model/game.model";
 
 export const PlayersSection: React.FC<object> = () => {
   const presenter = usePlayerSection();

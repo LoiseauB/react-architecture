@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { app } from "../../../app/app";
 import { PlayersForm } from "../../core/form/players-form";
-import { GameModel } from "../../core/model/creating-game.model";
+import { GameModel } from "../../core/model/game.model";
 
 export const usePlayerSection = () => {
   function addPlayer() {

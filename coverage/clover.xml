@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1744712485713" clover="3.2.0">
-  <project timestamp="1744712485713" name="All files">
-    <metrics statements="61" coveredstatements="60" conditionals="19" coveredconditionals="18" methods="6" coveredmethods="6" elements="86" coveredelements="84" complexity="0" loc="61" ncloc="61" packages="1" files="1" classes="1"/>
+<coverage generated="1744712571568" clover="3.2.0">
+  <project timestamp="1744712571568" name="All files">
+    <metrics statements="64" coveredstatements="63" conditionals="19" coveredconditionals="18" methods="6" coveredmethods="6" elements="89" coveredelements="87" complexity="0" loc="64" ncloc="64" packages="1" files="1" classes="1"/>
     <file name="players-form.ts" path="/Users/baptisteloiseau/Developer/3WA/dev3/squadforge/src/modules/create-game/core/form/players-form.ts">
-      <metrics statements="61" coveredstatements="60" conditionals="19" coveredconditionals="18" methods="6" coveredmethods="6"/>
+      <metrics statements="64" coveredstatements="63" conditionals="19" coveredconditionals="18" methods="6" coveredmethods="6"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
@@ -54,17 +54,20 @@
       <line num="48" count="4" type="stmt"/>
       <line num="49" count="4" type="cond" truecount="1" falsecount="0"/>
       <line num="50" count="3" type="cond" truecount="1" falsecount="0"/>
-      <line num="51" count="3" type="cond" truecount="1" falsecount="0"/>
+      <line num="51" count="3" type="stmt"/>
       <line num="52" count="3" type="stmt"/>
-      <line num="53" count="3" type="stmt"/>
+      <line num="53" count="3" type="cond" truecount="1" falsecount="0"/>
       <line num="54" count="3" type="stmt"/>
       <line num="55" count="3" type="stmt"/>
       <line num="56" count="3" type="stmt"/>
       <line num="57" count="3" type="stmt"/>
-      <line num="58" count="0" type="cond" truecount="0" falsecount="1"/>
+      <line num="58" count="3" type="stmt"/>
       <line num="59" count="3" type="stmt"/>
-      <line num="60" count="3" type="stmt"/>
-      <line num="61" count="1" type="stmt"/>
+      <line num="60" count="0" type="cond" truecount="0" falsecount="1"/>
+      <line num="61" count="3" type="stmt"/>
+      <line num="62" count="3" type="stmt"/>
+      <line num="63" count="3" type="stmt"/>
+      <line num="64" count="1" type="stmt"/>
     </file>
   </project>
 </coverage>
