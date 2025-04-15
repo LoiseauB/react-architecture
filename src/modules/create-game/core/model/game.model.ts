@@ -19,4 +19,10 @@ export namespace GameModel {
     players: Player[];
     teamLeaderId: string | null;
   };
+
+  export type Field = {
+    id: string;
+    name: string;
+    difficulty: number;
+  };
 }
