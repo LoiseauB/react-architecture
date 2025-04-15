@@ -1,10 +1,10 @@
 import { IIDGenerator } from "../../../shared/id-generator";
-import { CreatingGameModel } from "../model/creating-game.model";
+import { GameModel } from "../model/creating-game.model";
 
 export class PlayersForm {
   constructor(private idGenerator: IIDGenerator) {}
 
-  addPlayer(state: CreatingGameModel.Form): CreatingGameModel.Form {
+  addPlayer(state: GameModel.Form): GameModel.Form {
     return {
       ...state,
       players: [
@@ -19,10 +19,7 @@ export class PlayersForm {
     };
   }
 
-  removePlayer(
-    state: CreatingGameModel.Form,
-    id: string
-  ): CreatingGameModel.Form {
+  removePlayer(state: GameModel.Form, id: string): GameModel.Form {
     return {
       ...state,
       players: state.players.filter((player) => player.id !== id),
@@ -30,10 +27,7 @@ export class PlayersForm {
     };
   }
 
-  changeTeamLeader(
-    state: CreatingGameModel.Form,
-    id: string
-  ): CreatingGameModel.Form {
+  changeTeamLeader(state: GameModel.Form, id: string): GameModel.Form {
     return {
       ...state,
       teamLeaderId: state.players.some((player) => player.id === id)
@@ -42,28 +36,26 @@ export class PlayersForm {
     };
   }
 
-  isSubmittable(state: CreatingGameModel.Form): boolean {
+  isSubmittable(state: GameModel.Form): boolean {
     return state.players.length > 0 && state.teamLeaderId ? true : false;
   }
 
-  updatePlayer(
-    state: CreatingGameModel.Form,
+  updatePlayer<T extends keyof GameModel.Player>(
+    state: GameModel.Form,
     id: string,
-    key: keyof CreatingGameModel.Player,
-    value: string
-  ): CreatingGameModel.Form {
+    key: T,
+    value: GameModel.Player[T]
+  ): GameModel.Form {
     if (!id || !key || !value) return state;
 
-    const updatedPlayers = state.players.map((player) => {
+    return { ...state, players: state.players.map((player) => {
       if (player.id === id) {
         return {
           ...player,
-          [key]: isNaN(Number(value)) ? value : Number(value),
+          [key]: value,
         };
       }
       return player;
-    });
-
-    return { ...state, players: updatedPlayers };
+    }) };
   }
 }

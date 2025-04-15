@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { app } from "../../../app/app";
 import { PlayersForm } from "../../core/form/players-form";
-import { CreatingGameModel } from "../../core/model/creating-game.model";
+import { GameModel } from "../../core/model/creating-game.model";
 
 export const usePlayerSection = () => {
   function addPlayer() {
@@ -14,10 +14,10 @@ export const usePlayerSection = () => {
     setForm(newState);
   }
 
-  function updatePlayer(
+  function updatePlayer<T extends keyof GameModel.Player>(
     id: string,
-    key: keyof CreatingGameModel.Player,
-    value: string
+    key: T,
+    value: GameModel.Player[T]
   ) {
     setForm(playersForm.current.updatePlayer(form, id, key, value));
   }
@@ -35,7 +35,7 @@ export const usePlayerSection = () => {
     return playersForm.current.isSubmittable(form);
   }
 
-  const [form, setForm] = useState<CreatingGameModel.Form>({
+  const [form, setForm] = useState<GameModel.Form>({
     players: [],
     teamLeaderId: null,
   });

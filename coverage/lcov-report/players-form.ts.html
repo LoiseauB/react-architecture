@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98.55% </span>
+                <span class="strong">98.36% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>68/69</span>
+                <span class='fraction'>60/61</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.23% </span>
+                <span class="strong">94.73% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>20/21</span>
+                <span class='fraction'>18/19</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98.55% </span>
+                <span class="strong">98.36% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>68/69</span>
+                <span class='fraction'>60/61</span>
             </div>
         
             
@@ -124,15 +124,7 @@
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L62'></a><a href='#L62'>62</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -160,14 +152,8 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -198,16 +184,14 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IIDGenerator } from "../../../shared/id-generator";
-import { CreatingGameModel } from "../model/creating-game.model";
+import { GameModel } from "../model/creating-game.model";
 &nbsp;
 export class PlayersForm {
   constructor(private idGenerator: IIDGenerator) {}
 &nbsp;
-  addPlayer(state: CreatingGameModel.Form): CreatingGameModel.Form {
+  addPlayer(state: GameModel.Form): GameModel.Form {
     return {
       ...state,
       players: [
@@ -222,10 +206,7 @@ export class PlayersForm {
     };
   }
 &nbsp;
-  removePlayer(
-    state: CreatingGameModel.Form,
-    id: string
-  ): CreatingGameModel.Form {
+  removePlayer(state: GameModel.Form, id: string): GameModel.Form {
     return {
       ...state,
       players: state.players.filter((player) =&gt; player.id !== id),
@@ -233,10 +214,7 @@ export class PlayersForm {
     };
   }
 &nbsp;
-  changeTeamLeader(
-    state: CreatingGameModel.Form,
-    id: string
-  ): CreatingGameModel.Form {
+  changeTeamLeader(state: GameModel.Form, id: string): GameModel.Form {
     return {
       ...state,
       teamLeaderId: state.players.some((player) =&gt; player.id === id)
@@ -245,29 +223,27 @@ export class PlayersForm {
     };
   }
 &nbsp;
-  isSubmittable(state: CreatingGameModel.Form): boolean {
+  isSubmittable(state: GameModel.Form): boolean {
     return state.players.length &gt; 0 &amp;&amp; state.teamLeaderId ? true : false;
   }
 &nbsp;
-  updatePlayer(
-    state: CreatingGameModel.Form,
+  updatePlayer&lt;T extends keyof GameModel.Player&gt;(
+    state: GameModel.Form,
     id: string,
-    key: keyof CreatingGameModel.Player,
-    value: string
-  ): CreatingGameModel.Form {
+    key: T,
+    value: GameModel.Player[T]
+  ): GameModel.Form {
     if (!id || !key || !value) return state;
 &nbsp;
-    const updatedPlayers = state.players.map((player) =&gt; {
+    return { ...state, players: state.players.map((player) =&gt; {
       if (player.id === id) {
         return {
           ...player,
-          [key]: isNaN(Number(value)) ? value : Number(value),
+          [key]: value,
         };
       }
 <span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >      return player;</span></span>
-    });
-&nbsp;
-    return { ...state, players: updatedPlayers };
+    }) };
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -277,7 +253,7 @@ export class PlayersForm {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-15T09:46:23.711Z
+                at 2025-04-15T10:21:25.712Z
             </div>
         <script src="prettify.js"></script>
         <script>

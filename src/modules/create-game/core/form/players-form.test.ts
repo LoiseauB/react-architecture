@@ -1,5 +1,5 @@
 import { IIDGenerator } from "../../../shared/id-generator";
-import { CreatingGameModel } from "../model/creating-game.model";
+import { GameModel } from "../model/creating-game.model";
 import { PlayersForm } from "./players-form";
 
 class FixedIDGenerator implements IIDGenerator {
@@ -9,12 +9,12 @@ class FixedIDGenerator implements IIDGenerator {
 }
 const idGenerator = new FixedIDGenerator();
 const form = new PlayersForm(idGenerator);
-const emptyState: CreatingGameModel.Form = { players: [], teamLeaderId: null };
-const stateWithOnePlayer: CreatingGameModel.Form = {
+const emptyState: GameModel.Form = { players: [], teamLeaderId: null };
+const stateWithOnePlayer: GameModel.Form = {
   players: [{ id: "1", firstName: "John", lastName: "Doe", age: 30 }],
   teamLeaderId: null,
 };
-const stateWithTwoPlayers: CreatingGameModel.Form = {
+const stateWithTwoPlayers: GameModel.Form = {
   players: [
     { id: "1", firstName: "John", lastName: "Doe", age: 30 },
     { id: "2", firstName: "John", lastName: "Doe", age: 30 },
@@ -121,49 +121,13 @@ describe("Players Form", () => {
       expect(state).toEqual(stateWithOnePlayer);
     });
 
-    it("should update the first name", () => {
-      const state = form.updatePlayer(
-        stateWithOnePlayer,
-        "1",
-        "firstName",
-        "Bill"
-      );
-      expect(state.players[0]).toEqual({
-        id: "1",
-        firstName: "Bill",
-        lastName: "Doe",
-        age: 30,
-      });
-    });
-
-    it("should update the last name", () => {
-      const state = form.updatePlayer(
-        stateWithOnePlayer,
-        "1",
-        "lastName",
-        "Bill"
-      );
-      expect(state.players[0]).toEqual({
-        id: "1",
-        firstName: "John",
-        lastName: "Bill",
-        age: 30,
-      });
-    });
-   
-    it("should update the age", () => {
-      const state = form.updatePlayer(
-        stateWithOnePlayer,
-        "1",
-        "age",
-        "23"
-      );
-      expect(state.players[0]).toEqual({
-        id: "1",
-        firstName: "John",
-        lastName: "Doe",
-        age: 23,
-      });
+    it.each([
+      { key: "firstName" as keyof GameModel.Player, value: "Bill" },
+      { key: "lastName" as keyof GameModel.Player, value: "Bill" },
+      { key: "age" as keyof GameModel.Player, value: 23 },
+    ])("should update the player", ({ key, value }) => {
+      const state = form.updatePlayer(stateWithOnePlayer, "1", key, value);
+      expect(state.players[0][key]).toEqual(value);
     });
   });
 });
