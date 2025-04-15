@@ -14,8 +14,12 @@ export const usePlayerSection = () => {
     setForm(newState);
   }
 
-  function updatePlayer(id: string, key: keyof CreatingGameModel.Player, value: string) {
-    return playersForm.current.updatePlayer(form, id, key, value)
+  function updatePlayer(
+    id: string,
+    key: keyof CreatingGameModel.Player,
+    value: string
+  ) {
+    setForm(playersForm.current.updatePlayer(form, id, key, value));
   }
 
   function changeTeamLeader(id: string) {
@@ -23,7 +27,9 @@ export const usePlayerSection = () => {
     setForm(newState);
   }
 
-  function onNext() {}
+  function onNext() {
+    console.log(form);
+  }
 
   function isSubmittable() {
     return playersForm.current.isSubmittable(form);

@@ -12,6 +12,7 @@ import {
 import { usePlayerSection } from "./use-player-section.hook";
 
 import DeleteIcon from "@mui/icons-material/Delete";
+import { CreatingGameModel } from "../../core/model/creating-game.model";
 
 export const PlayersSection: React.FC<object> = () => {
   const presenter = usePlayerSection();
@@ -65,7 +66,11 @@ export const PlayerRow: React.FC<{
   lastName: string;
   age: number;
   isTeamLeader: boolean;
-  onChange: (id: string, key: string, value: string) => void;
+  onChange: (
+    id: string,
+    key: keyof CreatingGameModel.Player,
+    value: string
+  ) => void;
   onDelete: (id: string) => void;
   changeTeamLeader: (id: string) => void;
 }> = ({
@@ -86,7 +91,7 @@ export const PlayerRow: React.FC<{
             <FormLabel>Prénom</FormLabel>
             <TextField
               value={firstName}
-              onChange={(e) => onChange(id, "firstname", e.target.value)}
+              onChange={(e) => onChange(id, "firstName", e.target.value)}
             />
           </FormControl>
         </Grid>
@@ -95,7 +100,7 @@ export const PlayerRow: React.FC<{
             <FormLabel>Nom</FormLabel>
             <TextField
               value={lastName}
-              onChange={(e) => onChange(id, "lastname", e.target.value)}
+              onChange={(e) => onChange(id, "lastName", e.target.value)}
             />
           </FormControl>
         </Grid>
