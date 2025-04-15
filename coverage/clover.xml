@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1744644291394" clover="3.2.0">
-  <project timestamp="1744644291394" name="All files">
+<coverage generated="1744703132436" clover="3.2.0">
+  <project timestamp="1744703132436" name="All files">
     <metrics statements="43" coveredstatements="43" conditionals="8" coveredconditionals="8" methods="4" coveredmethods="4" elements="55" coveredelements="55" complexity="0" loc="43" ncloc="43" packages="1" files="1" classes="1"/>
     <file name="players-form.ts" path="/Users/baptisteloiseau/Developer/3WA/dev3/squadforge/src/modules/create-game/core/form/players-form.ts">
       <metrics statements="43" coveredstatements="43" conditionals="8" coveredconditionals="8" methods="4" coveredmethods="4"/>

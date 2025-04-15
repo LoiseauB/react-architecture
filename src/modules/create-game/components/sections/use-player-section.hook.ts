@@ -1,22 +1,25 @@
 import { useRef, useState } from "react";
-import { CreatingGameModel } from "../../core/model/creating-game.model";
-import { PlayersForm } from "../../core/form/players-form";
 import { app } from "../../../app/app";
+import { PlayersForm } from "../../core/form/players-form";
+import { CreatingGameModel } from "../../core/model/creating-game.model";
 
 export const usePlayerSection = () => {
   function addPlayer() {
     const newState = playersForm.current.addPlayer(form);
-    setsetForm(newState);
+    setForm(newState);
   }
 
   function removePlayer(id: string) {
     const newState = playersForm.current.removePlayer(form, id);
-    setsetForm(newState);
+    setForm(newState);
   }
 
   function updatePlayer(id: string, key: string, value: string | number) {}
 
-  function changeTeamLeader() {}
+  function changeTeamLeader(id: string) {
+    const newState = playersForm.current.changeTeamLeader(form, id);
+    setForm(newState);
+  }
 
   function onNext() {}
 
@@ -24,7 +27,7 @@ export const usePlayerSection = () => {
     return false;
   }
 
-  const [form, setsetForm] = useState<CreatingGameModel.Form>({
+  const [form, setForm] = useState<CreatingGameModel.Form>({
     players: [],
     teamLeaderId: null,
   });
